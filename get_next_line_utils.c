@@ -3,78 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: made-ped <made-ped@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: made-ped <made-ped@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 18:03:49 by made-ped          #+#    #+#             */
-/*   Updated: 2023/12/27 18:40:37 by made-ped         ###   ########.fr       */
+/*   Created: 2024/03/03 19:00:15 by made-ped          #+#    #+#             */
+/*   Updated: 2024/03/03 19:00:59 by made-ped         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
-{
-	size_t	len_s1;
-	size_t	len_s2;
-	char	*p;
-
-	if (!s1 && !s2)
-		return (NULL);
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	p = malloc(sizeof(char) * (len_s1 + len_s2 + 1));
-	if (!p)
-		return (NULL);
-	while (*s1)
-		*p++ = *s1++;
-	while (*s2)
-		*p++ = *s2++;
-	*p = '\0';
-	return (p - (len_s1 + len_s2));
-}
-
-char	*ft_strchr(const char *str, int c)
-{
-	char	*p_str;
-	char	cc;
-	int		i;
-
-	p_str = (char *)str;
-	cc = c;
-	i = 0;
-	while (p_str[i] != cc)
-	{
-		if (p_str[i] == '\0')
-			return (NULL);
-		i++;
-	}
-	return ((char *)p_str + i);
-}
-
-size_t	ft_strlen(const char *string)
+size_t	ft_strlen(char const *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (string[i])
+	while (*(str + i))
 		i++;
 	return (i);
 }
 
-char	*ft_strdup(const char *str)
+char	*ft_strchr(char const *str, int c)
 {
-	char	*p;
-	int		i;
-
-	i = 0;
-	p = malloc(ft_strlen(str) + 1);
-	if (!p)
+	if (!str)
 		return (NULL);
-	while (str[i])
+	while (*str)
 	{
-		p[i] = str[i];
-		i++;
+		if (*str == (char)c)
+			return ((char *)str);
+		str++;
 	}
-	p[i] = '\0';
-	return (p);
+	if (*str == (char)c)
+		return ((char *)str);
+	else
+		return (NULL);
+}
+
+char	*ft_strcpy(char *dest, const char *src)
+{
+	char	*dest_start;
+
+	dest_start = dest;
+	while (*src)
+		*dest++ = *src++;
+	*dest = '\0';
+	return (dest_start);
+}
+
+char	*ft_strdup(const char *src)
+{
+	size_t	len;
+	char	*dest;
+
+	len = ft_strlen(src);
+	dest = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dest)
+		return (NULL);
+	return (ft_strcpy(dest, src));
+}
+
+char	*ft_strjoin(char *buffer, const char *content)
+{
+	size_t	buffer_len;
+	size_t	content_len;
+	char	*result;
+	char	*result_ptr;
+	char	*src;
+
+	buffer_len = 0;
+	if (!buffer && !content)
+		return (NULL);
+	if (buffer)
+		buffer_len = ft_strlen(buffer);
+	content_len = ft_strlen(content);
+	result = (char *)malloc(sizeof(char) * (buffer_len + content_len + 1));
+	if (!result)
+		return (NULL);
+	result_ptr = result;
+	src = buffer;
+	while (src && *src)
+		*result_ptr++ = *src++;
+	src = (char *)content;
+	while (src && *src)
+		*result_ptr++ = *src++;
+	*result_ptr = '\0';
+	free(buffer);
+	return (result);
 }

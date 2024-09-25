@@ -3,30 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: made-ped <made-ped@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: made-ped <made-ped@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 12:27:11 by made-ped          #+#    #+#             */
-/*   Updated: 2024/01/14 20:04:26 by made-ped         ###   ########.fr       */
+/*   Created: 2024/03/03 19:01:36 by made-ped          #+#    #+#             */
+/*   Updated: 2024/03/03 19:02:06 by made-ped         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <fcntl.h>
+# include <limits.h>
 
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <limits.h>
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 6
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strchr(const char *str, int c);
-size_t	ft_strlen(const char *string);
-char	*ft_strdup(const char *str);
+size_t	ft_strlen(char const *str);
+char	*ft_strchr(char const *str, int c);
+char	*ft_strcpy(char *dest, const char *src);
+char	*ft_strdup(char const *src);
+char	*ft_strjoin(char *buffer, const char *content);
 
 #endif
